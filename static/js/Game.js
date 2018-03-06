@@ -154,21 +154,21 @@ function Game() {
             if (picked) {
 
                 //--------- WARUNKI NA PRZESUNIĘCIE
-                var geometry = 0, pole = 0, czyste = 0, somsiad = 0;
+                var geometry = 0, pole = 0, czyste = 0, krok = 0;
 
                 if (element.geometry.type == "BoxGeometry") geometry = 1;
                 if (element.userData.color == "black") pole = 1;
                 if (pionki[element.userData.x][element.userData.y] == 0) czyste = 1;
 
                 if (net.get_stan() == "player1") {
-                    if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) < 2) somsiad = 1;
+                    if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) < 2) krok = 1;
                 }
                 else {
-                    if (element.userData.x - picked.userData.x == 1 && Math.abs(picked.userData.y - element.userData.y) < 2) somsiad = 1;
+                    if (element.userData.x - picked.userData.x == 1 && Math.abs(picked.userData.y - element.userData.y) < 2) krok = 1;
                 }
 
 
-                if (geometry && pole && czyste && somsiad) {
+                if (geometry && pole && czyste) {
                     pionki[picked.userData.x][picked.userData.y] = 0
 
                     if (net.get_stan() == "player1") {
