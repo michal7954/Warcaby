@@ -16,8 +16,6 @@ function Net() {
             data: { action: "add", name: login },
             type: "POST",
             success: function (data) {
-                //console.log(data);
-                //zniknij();
                 switch (data) {
                     case "player1":
                         $("#info").html(data + ": " + login + "</br>Czekanie na gracza 2")
@@ -45,7 +43,6 @@ function Net() {
                 }
             },
             error: function (xhr, status, error) {
-                //console.log(xhr);
                 console.log("error")
             },
         });
@@ -59,7 +56,6 @@ function Net() {
             success: function (data) {
             },
             error: function (xhr, status, error) {
-                //console.log(xhr);
                 console.log("error")
             },
         });
@@ -75,14 +71,12 @@ function Net() {
             data: { action: "check" },
             type: "POST",
             success: function (data) {
-                //console.log(data);
                 if (data == "true") {
                     stop();
                     $("#info").html(stan + ": " + mojlogin + "</br>Gracz 2 dołączył")
                 }
             },
             error: function (xhr, status, error) {
-                //console.log(xhr);
                 console.log("error")
             },
         });

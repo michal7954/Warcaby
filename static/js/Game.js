@@ -80,11 +80,6 @@ function Game() {
             }
         }
 
-        //----------AXEX
-
-        var axes = new THREE.AxesHelper(10000)
-        //scene.add(axes)
-
         function render() {
             requestAnimationFrame(render);
             renderer.render(scene, camera);
@@ -133,20 +128,9 @@ function Game() {
         var intersects = raycaster.intersectObjects(scene.children);
 
         if (intersects.length > 0) {
-
-            //console.log(net.get_stan())
-            //console.log(net.test)
-
             var element = intersects[0].object;
-            //picked.userData = { a: 1, b: 2, c: 3 };
-            //console.log(picked.geometry.type);
-            //console.log(picked)
-            //console.log(element.userData)
-
-            //console.log(pionki[element.userData.x][element.userData.y])
 
             if (element.geometry.type == "CylinderGeometry") {
-                //console.log(element)
                 if (element == picked) {
                     console.log("ten sam")
                     element.material = origin_material;
@@ -172,14 +156,9 @@ function Game() {
                 //--------- WARUNKI NA PRZESUNIĘCIE
                 var geometry = 0, pole = 0, czyste = 0, somsiad = 0;
 
-                //console.log(picked.userData.player)
-                //console.log(net.get_stan())
-
                 if (element.geometry.type == "BoxGeometry") geometry = 1;
                 if (element.userData.color == "black") pole = 1;
                 if (pionki[element.userData.x][element.userData.y] == 0) czyste = 1;
-
-                //console.log(element.userData.x, picked.userData.x)
 
                 if (net.get_stan() == "player1") {
                     if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) < 2) somsiad = 1;
@@ -189,13 +168,7 @@ function Game() {
                 }
 
 
-
                 if (geometry && pole && czyste && somsiad) {
-                    //console.log(element.userData)
-                    //console.log(picked)
-
-
-
                     pionki[picked.userData.x][picked.userData.y] = 0
 
                     if (net.get_stan() == "player1") {
@@ -207,7 +180,6 @@ function Game() {
 
                     picked.userData.x = element.userData.x;
                     picked.userData.y = element.userData.y;
-
 
                     picked.position.x = element.position.x;
                     picked.position.z = element.position.z;

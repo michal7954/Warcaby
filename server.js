@@ -96,9 +96,8 @@ var server = http.createServer(function (req, res) {
         }
     }
     if (request.method == "POST") {
+
         var allData = "";
-
-
         req.on("data", function (data) {
             allData += data
         })
@@ -117,8 +116,6 @@ var server = http.createServer(function (req, res) {
                     if (p[1]) {
                         info = "true";
                     }
-                    //console.log(info + " : " + count)
-                    //count++;
                     res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
                     res.end(info);
                     break;
@@ -131,23 +128,6 @@ var server = http.createServer(function (req, res) {
 server.listen(3000, function () {
     console.log("serwer startuje na porcie 3000")
 });
-
-/*
-function servRes(req, res) {
-    var allData = "";
-
-    req.on("data", function (data) {
-        //console.log("data: " + data)
-        allData += data;
-    })
-
-    req.on("end", function (data) {
-        var finish = qs.parse(allData)
-        res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
-        res.end("odsyłam do przeglądarki" + JSON.stringify(finish));
-    })
-}
-*/
 
 function add(name, req, res) {
     var stan;
