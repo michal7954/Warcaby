@@ -9,6 +9,7 @@ var server = http.createServer(function (req, res) {
     var response = res;
 
     if (request.method == "GET") {
+
         if (request.url === "/") {
             fs.readFile("static/index.html", function (error, data) {
                 response.writeHead(200, { 'Content-Type': 'text/html' });

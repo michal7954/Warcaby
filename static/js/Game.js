@@ -83,7 +83,7 @@ function Game() {
         //----------AXEX
 
         var axes = new THREE.AxesHelper(10000)
-        scene.add(axes)
+        //scene.add(axes)
 
         function render() {
             requestAnimationFrame(render);
@@ -124,6 +124,7 @@ function Game() {
     var old_material;
     var old_picked;
     var picked;
+    var orginal_material;
 
     this.pick = function (event) {
         mouseVector.x = (event.clientX / $(window).width()) * 2 - 1;
@@ -140,17 +141,26 @@ function Game() {
             //picked.userData = { a: 1, b: 2, c: 3 };
             //console.log(picked.geometry.type);
             //console.log(picked)
-            console.log(element.userData)
+            //console.log(element.userData)
+
+            //console.log(pionki[element.userData.x][element.userData.y])
+
             if (element.geometry.type == "CylinderGeometry") {
-                console.log(element.userData.player)
-                if (element.userData.player == net.get_stan()) {
+                //console.log(element)
+                if (element == picked) {
+                    console.log("ten sam")
+                    element.material = origin_material;
+                    picked = "";
+                }
+
+                else if (element.userData.player == net.get_stan()) {
                     picked = element;
 
                     if (old_picked) {
-                        old_picked.material = old_material;
+                        old_picked.material = origin_material;
                     }
 
-                    old_material = picked.material;
+                    origin_material = picked.material;
                     old_picked = picked;
 
                     picked.material = picked_material;
@@ -158,11 +168,53 @@ function Game() {
             }
 
             if (picked) {
-                if (element.geometry.type == "BoxGeometry" && element.userData.color == "black" /*  && pionki[element.userData.x][element.userData.y] == 0  */) {
-                    //console.log(element.position)
+
+                //--------- WARUNKI NA PRZESUNIĘCIE
+                var geometry = 0, pole = 0, czyste = 0, somsiad = 0;
+
+                //console.log(picked.userData.player)
+                //console.log(net.get_stan())
+
+                if (element.geometry.type == "BoxGeometry") geometry = 1;
+                if (element.userData.color == "black") pole = 1;
+                if (pionki[element.userData.x][element.userData.y] == 0) czyste = 1;
+
+                //console.log(element.userData.x, picked.userData.x)
+
+                if (net.get_stan() == "player1") {
+                    if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) < 2) somsiad = 1;
+                }
+                else {
+                    if (element.userData.x - picked.userData.x == 1 && Math.abs(picked.userData.y - element.userData.y) < 2) somsiad = 1;
+                }
+
+
+
+                if (geometry && pole && czyste && somsiad) {
+                    //console.log(element.userData)
+                    //console.log(picked)
+
+
+
+                    pionki[picked.userData.x][picked.userData.y] = 0
+
+                    if (net.get_stan() == "player1") {
+                        pionki[element.userData.x][element.userData.y] = 1
+                    }
+                    else if (net.get_stan() == "player2") {
+                        pionki[element.userData.x][element.userData.y] = 2
+                    }
+
+                    picked.userData.x = element.userData.x;
+                    picked.userData.y = element.userData.y;
+
+
                     picked.position.x = element.position.x;
                     picked.position.z = element.position.z;
                     picked.position.y = 35;
+
+                    picked.material = origin_material;
+                    picked = "";
                 }
             }
         }
