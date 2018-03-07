@@ -132,7 +132,7 @@ function Game() {
 
             if (element.geometry.type == "CylinderGeometry") {
 
-                console.log(element)
+                //console.log(element)
                 if (element == picked) {
                     //console.log("ten sam")
                     element.material = origin_material;

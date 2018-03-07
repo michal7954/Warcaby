@@ -53,7 +53,7 @@ function Net() {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error")
+                //console.log("error")
             },
         });
     });
@@ -66,7 +66,7 @@ function Net() {
             success: function (data) {
             },
             error: function (xhr, status, error) {
-                console.log("error")
+                //console.log("error")
             },
         });
     });
@@ -87,7 +87,7 @@ function Net() {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error")
+                //console.log("error")
             },
         });
     }
@@ -104,7 +104,7 @@ function Net() {
 
         clearInterval(porownywanie)
 
-        console.log("update")
+        //console.log("update")
         //console.log(pionki)
 
         $.ajax({
@@ -114,11 +114,11 @@ function Net() {
             success: function (data) {
                 if (data = "ok") {
                     porownywanie = setInterval(function () { porownywanie_tablic_klient() }, 1000);
-                    console.log("okokokokokokokokokokokokokookooko")
+                    //console.log("okokokokokokokokokokokokokookooko")
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error")
+                //console.log("error")
                 this.aktualizacja_tablicy_klient(game.get_pionki())
             },
         });
@@ -135,7 +135,7 @@ function Net() {
             type: "POST",
             success: function (data) {
                 var obj = JSON.parse(data)
-                console.log(obj.zmiany)
+                //console.log(obj.zmiany)
                 if (obj.zmiany == "true") {
                     //console.log(obj.pionkiTab)
                     //console.log("refresh")
@@ -144,7 +144,7 @@ function Net() {
                 }
             },
             error: function (xhr, status, error) {
-                console.log("error")
+                //console.log("error")
             },
         });
     }
