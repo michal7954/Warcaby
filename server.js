@@ -2,7 +2,6 @@ var http = require("http");
 var qs = require("querystring");
 var fs = require("fs");
 var p = [];
-var count = 0;
 
 var server = http.createServer(function (req, res) {
     var request = req;
@@ -137,9 +136,7 @@ function add(name, req, res) {
     var stan;
     if (!p[0]) {
         p[0] = name;
-        //console.log("1")
         stan = "player1";
-        count = 0;
     }
     else if (!p[1]) {
         if (p[0] != name) {
@@ -147,12 +144,21 @@ function add(name, req, res) {
             stan = "player2";
         }
         else {
-            stan = "login zajęty"
+            //stan = "login zajęty" !!!
+            stan = "player1";
         }
-
     }
     else {
-        stan = "brak miejsc";
+        if(p[0] == name){
+            stan = "player1";
+        }
+        else if(p[1] == name){
+            stan = "player2";
+        }
+        else{
+            stan = "brak miejsc";
+        }
+        
     }
     res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
     res.end(stan);
