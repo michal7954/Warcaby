@@ -17,26 +17,36 @@ function Net() {
             type: "POST",
             success: function (data) {
                 switch (data) {
+
                     case "player1":
                         $("#info").html(data + ": " + login + "</br>Czekanie na gracza 2")
                         game.setPoz("front");
+
                         game.dajPionki()
                         czekaj = setInterval(function () { check() }, 500);
                         zniknij()
+                        porownywanie = setInterval(function () { porownywanie_tablic_klient() }, 1000);
+
                         stan = data;
                         mojlogin = login;
                         break;
+
                     case "player2":
                         $("#info").text(data + ": " + login)
                         game.setPoz("back");
+
                         game.dajPionki()
                         zniknij()
+                        porownywanie = setInterval(function () { porownywanie_tablic_klient() }, 1000);
+
                         stan = data;
                         mojlogin = login;
                         break;
+
                     case "login zajęty":
                         $("#info").text(data)
                         break;
+
                     case "brak miejsc":
                         $("#info").text(data)
                         break;
@@ -89,5 +99,9 @@ function Net() {
 
     function stop() {
         clearInterval(czekaj);
+    }
+
+    this.aktualizacja_tablicy_klient(){
+
     }
 }

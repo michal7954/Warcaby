@@ -111,13 +111,18 @@ var server = http.createServer(function (req, res) {
                     reset();
                     break;
                 case "check":
-
                     var info = "false";
                     if (p[1]) {
                         info = "true";
                     }
                     res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
                     res.end(info);
+                    break;
+                case "aktualizacja_tablicy":
+                    aktualizacja_tablicy(finishObj, req, res);
+                    break;
+                case "porównywanie_tablic":
+                    porównywanie_tablic(finishObj, req, res);
                     break;
             }
         })
@@ -156,4 +161,23 @@ function add(name, req, res) {
 
 function reset() {
     p = [];
+}
+
+var pionkiTab = [
+    [0, 2, 0, 2, 0, 2, 0, 2],
+    [2, 0, 2, 0, 2, 0, 2, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+]
+
+function aktualizacja_tablicy(finishObj, req, res) {
+    console.log(finishObj)
+}
+
+function porownywanie_tablic(finishObj, req, res) {
+    console.log(finishObj)
 }
