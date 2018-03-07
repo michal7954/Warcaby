@@ -90,7 +90,6 @@ function Net() {
                 console.log("error")
             },
         });
-
     }
 
     this.get_stan = function () {
@@ -101,7 +100,52 @@ function Net() {
         clearInterval(czekaj);
     }
 
-    this.aktualizacja_tablicy_klient(){
+    this.aktualizacja_tablicy_klient = function (pionki) {
 
+        clearInterval(porownywanie)
+
+        console.log("update")
+        //console.log(pionki)
+
+        $.ajax({
+            url: "http://localhost:3000/",
+            data: { action: "aktualizacja_tablicy", data: JSON.stringify(pionki) },
+            type: "POST",
+            success: function (data) {
+                if (data = "ok") {
+                    porownywanie = setInterval(function () { porownywanie_tablic_klient() }, 1000);
+                    console.log("okokokokokokokokokokokokokookooko")
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("error")
+                this.aktualizacja_tablicy_klient(game.get_pionki())
+            },
+        });
+
+    }
+
+    function porownywanie_tablic_klient() {
+        //console.log("compare")
+        //console.log(game.get_pionki())
+
+        $.ajax({
+            url: "http://localhost:3000/",
+            data: { action: "porownywanie_tablic", data: JSON.stringify(game.get_pionki()) },
+            type: "POST",
+            success: function (data) {
+                var obj = JSON.parse(data)
+                console.log(obj.zmiany)
+                if (obj.zmiany == "true") {
+                    //console.log(obj.pionkiTab)
+                    //console.log("refresh")
+                    game.set_pionki(obj.pionkiTab);
+                    game.refresh();
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log("error")
+            },
+        });
     }
 }

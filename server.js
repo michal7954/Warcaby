@@ -121,12 +121,11 @@ var server = http.createServer(function (req, res) {
                 case "aktualizacja_tablicy":
                     aktualizacja_tablicy(finishObj, req, res);
                     break;
-                case "porównywanie_tablic":
-                    porównywanie_tablic(finishObj, req, res);
+                case "porownywanie_tablic":
+                    porownywanie_tablic(finishObj, req, res);
                     break;
             }
         })
-
     }
 })
 
@@ -159,10 +158,6 @@ function add(name, req, res) {
     res.end(stan);
 }
 
-function reset() {
-    p = [];
-}
-
 var pionkiTab = [
     [0, 2, 0, 2, 0, 2, 0, 2],
     [2, 0, 2, 0, 2, 0, 2, 0],
@@ -174,10 +169,41 @@ var pionkiTab = [
     [1, 0, 1, 0, 1, 0, 1, 0],
 ]
 
+function reset() {
+    p = [];
+    pionkiTab = [
+        [0, 2, 0, 2, 0, 2, 0, 2],
+        [2, 0, 2, 0, 2, 0, 2, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+    ]
+}
+
 function aktualizacja_tablicy(finishObj, req, res) {
-    console.log(finishObj)
+    //console.log(finishObj)
+
+    pionkiTab = JSON.parse(finishObj.data)
+    //console.log(pionkiTab)
+
+    var data = "ok"
+    res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
+    res.end(data);
 }
 
 function porownywanie_tablic(finishObj, req, res) {
-    console.log(finishObj)
+    var obj = {};
+    if (finishObj.data === JSON.stringify(pionkiTab)) {
+        obj.zmiany = "false";
+    }
+    else {
+        obj.zmiany = "true";
+        obj.pionkiTab = pionkiTab;
+    }
+    var string = JSON.stringify(obj)
+    res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
+    res.end(string);
 }

@@ -131,8 +131,10 @@ function Game() {
             var element = intersects[0].object;
 
             if (element.geometry.type == "CylinderGeometry") {
+
+                console.log(element)
                 if (element == picked) {
-                    console.log("ten sam")
+                    //console.log("ten sam")
                     element.material = origin_material;
                     picked = "";
                 }
@@ -187,27 +189,30 @@ function Game() {
 
                     picked.material = origin_material;
                     picked = "";
+
+                    net.aktualizacja_tablicy_klient(pionki)
                 }
             }
         }
     }
 
+    var cylinder = new THREE.CylinderGeometry(40, 40, 25, 32);
+
+    var material2 = new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide,
+        map: new THREE.TextureLoader().load('/gfx/red.jpg'),
+        transparent: true,
+        opacity: 1,
+    })
+
+    var material3 = new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide,
+        map: new THREE.TextureLoader().load('/gfx/green.jpg'),
+        transparent: true,
+        opacity: 1,
+    })
+
     this.dajPionki = function () {
-        var cylinder = new THREE.CylinderGeometry(40, 40, 25, 32);
-
-        var material2 = new THREE.MeshBasicMaterial({
-            side: THREE.DoubleSide,
-            map: new THREE.TextureLoader().load('/gfx/red.jpg'),
-            transparent: true,
-            opacity: 1,
-        })
-
-        var material3 = new THREE.MeshBasicMaterial({
-            side: THREE.DoubleSide,
-            map: new THREE.TextureLoader().load('/gfx/green.jpg'),
-            transparent: true,
-            opacity: 1,
-        })
 
         for (i = 0; i < szach.length; i++) {
             for (j = 0; j < szach[i].length; j++) {
@@ -227,5 +232,34 @@ function Game() {
                 }
             }
         }
+    }
+
+    this.get_pionki = function () {
+        return pionki;
+    }
+
+    this.set_pionki = function (new_pionki) {
+        pionki = new_pionki;
+    }
+
+    this.refresh = function () {
+        //console.log(scene.children)
+        var c = 0;
+        while (scene.children[c]) {
+            if (scene.children[c].geometry.type == "CylinderGeometry") {
+                scene.remove(scene.children[c])
+            }
+            else {
+                c++;
+            }
+        }
+        /*
+        for (i = scene.children.length - 1; i > 0; i--) {
+            if (scene.children[i].geometry.type == "CylinderGeometry") {
+                scene.remove(scene.children[i])
+            }
+        }
+        */
+        this.dajPionki();
     }
 }
