@@ -64,6 +64,9 @@ function Net() {
             data: { action: "reset" },
             type: "POST",
             success: function (data) {
+                if (data == "ok") {
+                    location.reload();
+                }
             },
             error: function (xhr, status, error) {
                 //console.log("error")

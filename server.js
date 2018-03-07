@@ -107,7 +107,7 @@ var server = http.createServer(function (req, res) {
                     add(finishObj.name, req, res)
                     break;
                 case "reset":
-                    reset();
+                    reset(res);
                     break;
                 case "check":
                     var info = "false";
@@ -175,7 +175,7 @@ var pionkiTab = [
     [1, 0, 1, 0, 1, 0, 1, 0],
 ]
 
-function reset() {
+function reset(res) {
     p = [];
     pionkiTab = [
         [0, 2, 0, 2, 0, 2, 0, 2],
@@ -187,6 +187,10 @@ function reset() {
         [0, 1, 0, 1, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 0],
     ]
+
+    var stan="ok"
+    res.writeHead(200, { "content-type": "text/html;charset=utf-8" })
+    res.end(stan);
 }
 
 function aktualizacja_tablicy(finishObj, req, res) {
