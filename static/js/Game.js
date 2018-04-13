@@ -154,7 +154,6 @@ function Game() {
             }
 
             if (picked) {
-
                 //--------- WARUNKI NA PRZESUNIĘCIE
                 var geometry = 0, pole = 0, czyste = 0, krok = 0;
 
@@ -163,14 +162,46 @@ function Game() {
                 if (pionki[element.userData.x][element.userData.y] == 0) czyste = 1;
 
                 if (net.get_stan() == "player1") {
-                    if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) < 2) krok = 1;
+                    if (element.userData.x - picked.userData.x == -1 && Math.abs(picked.userData.y - element.userData.y) == 1) krok = 1;
+                    if (element.userData.x - picked.userData.x == -2 && Math.abs(picked.userData.y - element.userData.y) == 2) {
+                        var zbijany = {};
+                        zbijany.x = (element.userData.x + picked.userData.x) / 2;
+                        zbijany.y = (element.userData.y + picked.userData.y) / 2;
+                        if (pionki[zbijany.x][zbijany.y] == 2) {
+                            pionki[zbijany.x][zbijany.y] = 0;
+                            krok = 1;
+
+                            for (i = 0; i < scene.children.length; i++) {
+                                if (scene.children[i].userData.player == "player2" && scene.children[i].userData.x == zbijany.x && scene.children[i].userData.y == zbijany.y) {
+                                    zbijany.obj = scene.children[i];
+                                    scene.remove(zbijany.obj);
+                                }
+                            }
+                        }
+                    }
                 }
                 else {
-                    if (element.userData.x - picked.userData.x == 1 && Math.abs(picked.userData.y - element.userData.y) < 2) krok = 1;
+                    if (element.userData.x - picked.userData.x == 1 && Math.abs(picked.userData.y - element.userData.y) == 1) krok = 1;
+                    if (element.userData.x - picked.userData.x == 2 && Math.abs(picked.userData.y - element.userData.y) == 2) {
+                        var zbijany = {};
+                        zbijany.x = (element.userData.x + picked.userData.x) / 2;
+                        zbijany.y = (element.userData.y + picked.userData.y) / 2;
+                        if (pionki[zbijany.x][zbijany.y] == 1) {
+                            pionki[zbijany.x][zbijany.y] = 0;
+                            krok = 1;
+
+                            for (i = 0; i < scene.children.length; i++) {
+                                if (scene.children[i].userData.player == "player1" && scene.children[i].userData.x == zbijany.x && scene.children[i].userData.y == zbijany.y) {
+                                    zbijany.obj = scene.children[i];
+                                    scene.remove(zbijany.obj);
+                                }
+                            }
+                        }
+                    }
                 }
 
 
-                if (geometry && pole && czyste) {
+                if (geometry && pole && czyste && krok) {
                     pionki[picked.userData.x][picked.userData.y] = 0
 
                     if (net.get_stan() == "player1") {
